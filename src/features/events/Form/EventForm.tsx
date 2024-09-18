@@ -62,7 +62,7 @@ function EventForm() {
         <FormInput
           type="text"
           placeholder="Event Title"
-          defaultValue={event?.title || ""}
+          defaultvalue={event?.title || ""}
           {...register("title", { required: true })}
           error={errors.title && "Title is required"}
         />
@@ -89,7 +89,7 @@ function EventForm() {
         <FormTextArea
           type="text"
           placeholder="description"
-          defaultValue={event?.description || ""}
+          defaultvalue={event?.description || ""}
           {...register("description", { required: "description is required" })}
           error={errors.description && errors.description.message}
         />
@@ -99,7 +99,7 @@ function EventForm() {
         <FormInput
           type="text"
           placeholder="city"
-          defaultValue={event?.city || ""}
+          defaultvalue={event?.city || ""}
           {...register("city", { required: "city is required" })}
           error={errors.city && errors.city.message}
         />
@@ -107,7 +107,7 @@ function EventForm() {
         <FormInput
           placeholder="venue"
           type="text"
-          defaultValue={event?.venue || ""}
+          defaultvalue={event?.venue || ""}
           {...register("venue", { required: "venue is required" })}
           error={errors.venue && errors.venue.message}
         />
