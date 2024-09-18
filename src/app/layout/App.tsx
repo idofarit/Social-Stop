@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import Navbar from "./nav/Navbar";
 import HomePage from "../../features/Home/HomePage";
+import ModalManager from "../common/modals/ModalManager";
 
 function App() {
   const location = useLocation();
@@ -12,6 +13,7 @@ function App() {
         <HomePage />
       ) : (
         <>
+          <ModalManager />
           <Navbar />
           <Container className="main">
             <Outlet />
