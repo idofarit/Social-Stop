@@ -1,22 +1,9 @@
 import { ChangeEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Form, FormField, Header, Segment } from "semantic-ui-react";
-import { AppEvent } from "../../../app/types/event";
-import { createId } from "@paralleldrive/cuid2";
 
-type Props = {
-  setFormOpen: (value: boolean) => void;
-  addEvent: (event: AppEvent) => void;
-  selectedEvent: AppEvent | null;
-  updateEvent: (event: AppEvent) => void;
-};
-
-function EventForm({
-  setFormOpen,
-  addEvent,
-  updateEvent,
-  selectedEvent,
-}: Props) {
-  const initialValue = selectedEvent ?? {
+function EventForm() {
+  const initialValue = {
     title: "",
     category: "",
     description: "",
@@ -29,16 +16,18 @@ function EventForm({
 
   function onSubmit() {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    selectedEvent
-      ? updateEvent({ ...selectedEvent, ...values })
-      : addEvent({
-          ...values,
-          id: createId(),
-          hostedBy: "Maddy",
-          attendees: [],
-          hostPhotoURL: "",
-        });
-    setFormOpen(false);
+    // selectedEvent
+    //   ? updateEvent({ ...selectedEvent, ...values })
+    //   : addEvent({
+    //       ...values,
+    //       id: createId(),
+    //       hostedBy: "Maddy",
+    //       attendees: [],
+    //       hostPhotoURL: "",
+    //     });
+    // setFormOpen(false);
+
+    console.log(values);
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -48,7 +37,7 @@ function EventForm({
 
   return (
     <Segment clearing>
-      <Header content={selectedEvent ? "Update event" : "Create event"} />
+      <Header content="Create event" />
       <Form onSubmit={onSubmit}>
         <FormField>
           <input
@@ -107,10 +96,11 @@ function EventForm({
 
         <Button type="submit" floated="right" positive content="Submit" />
         <Button
+          as={Link}
+          to="/events"
           type="button"
           floated="right"
           content="Cancel"
-          onClick={() => setFormOpen(false)}
         />
       </Form>
     </Segment>
