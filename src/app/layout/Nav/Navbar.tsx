@@ -3,9 +3,21 @@ import { Button, Container, Menu, MenuItem } from "semantic-ui-react";
 import { useAppSelector } from "../../store/store";
 import SignedInMenu from "./SignedInMenu";
 import SignedOutButton from "./SignedOutButton";
+import { sampleData } from "../../api/sampleData";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 function Navbar() {
   const { authenticated } = useAppSelector((state) => state.auth);
+
+  function seedData() {
+    sampleData.forEach(async (event) => {
+      const { id, ...rest } = event;
+      await setDoc(doc(db, "events", id), {
+        ...rest,
+      });
+    });
+  }
 
   return (
     <Menu inverted={true} fixed="top">
@@ -31,6 +43,16 @@ function Navbar() {
           />
         </MenuItem>
 
+        {import.meta.env.DEV && (
+          <MenuItem>
+            <Button
+              onClick={seedData}
+              color="teal"
+              inverted={true}
+              content="seed data"
+            />
+          </MenuItem>
+        )}
         {authenticated ? <SignedInMenu /> : <SignedOutButton />}
       </Container>
     </Menu>

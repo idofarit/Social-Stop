@@ -1,3 +1,12 @@
+import {
+  collection,
+  doc,
+  setDoc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Controller, FieldValues, useForm } from "react-hook-form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -10,12 +19,11 @@ import {
   Header,
   Segment,
 } from "semantic-ui-react";
-import { useAppDispatch, useAppSelector } from "../../../app/store/store";
+import { db } from "../../../app/config/firebase";
+import { useAppSelector } from "../../../app/store/store";
+import { AppEvent } from "../../../app/types/event";
 import { categoryOptions } from "./categoryOptions";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import { createId } from "@paralleldrive/cuid2";
-import { updateEvent, createEvent } from "../eventSlice";
+import toast from "react-hot-toast";
 
 function EventForm() {
   const {
@@ -26,33 +34,48 @@ function EventForm() {
     formState: { errors, isValid, isSubmitting },
   } = useForm({ mode: "onTouched" });
 
-  let { id } = useParams();
+  const { id } = useParams();
 
   const event = useAppSelector((state) =>
     state.events.events.find((e) => e.id === id)
   );
-  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  function onSubmit(data: FieldValues) {
-    id = id ?? createId();
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    event
-      ? dispatch(updateEvent({ ...event, ...data, date: data.date.toString() }))
-      : dispatch(
-          createEvent({
-            ...data,
-            id,
-            hostedBy: "Maddy",
-            attendees: [],
-            hostPhotoURL: "",
-            date: data.date.toString(),
-          })
-        );
-    navigate(`/events/${id}`);
+  async function updateEvent(data: AppEvent) {
+    if (!event) return;
+    const docRef = doc(db, "events", event.id);
+    await updateDoc(docRef, {
+      ...data,
+      date: Timestamp.fromDate(data.date as unknown as Date),
+    });
+  }
 
-    console.log(data);
+  async function createEvent(data: FieldValues) {
+    const newEventRef = doc(collection(db, "events"));
+    await setDoc(newEventRef, {
+      ...data,
+      hostedBy: "Maddy",
+      attendees: [],
+      hostPhotoURL: "",
+      date: Timestamp.fromDate(data.date as unknown as Date),
+    });
+    return newEventRef;
+  }
+
+  async function onSubmit(data: FieldValues) {
+    try {
+      if (event) {
+        await updateEvent({ ...event, ...data });
+        navigate(`/events/${event.id}`);
+      } else {
+        const ref = await createEvent(data);
+        navigate(`/events/${ref.id}`);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+      console.log(error.message);
+    }
   }
 
   return (
@@ -62,7 +85,7 @@ function EventForm() {
         <FormInput
           type="text"
           placeholder="Event Title"
-          defaultvalue={event?.title || ""}
+          defaultValue={event?.title || ""}
           {...register("title", { required: true })}
           error={errors.title && "Title is required"}
         />
@@ -89,7 +112,7 @@ function EventForm() {
         <FormTextArea
           type="text"
           placeholder="description"
-          defaultvalue={event?.description || ""}
+          defaultValue={event?.description || ""}
           {...register("description", { required: "description is required" })}
           error={errors.description && errors.description.message}
         />
@@ -99,7 +122,7 @@ function EventForm() {
         <FormInput
           type="text"
           placeholder="city"
-          defaultvalue={event?.city || ""}
+          defaultValue={event?.city || ""}
           {...register("city", { required: "city is required" })}
           error={errors.city && errors.city.message}
         />
@@ -107,7 +130,7 @@ function EventForm() {
         <FormInput
           placeholder="venue"
           type="text"
-          defaultvalue={event?.venue || ""}
+          defaultValue={event?.venue || ""}
           {...register("venue", { required: "venue is required" })}
           error={errors.venue && errors.venue.message}
         />

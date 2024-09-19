@@ -13,7 +13,6 @@ function ModalManager() {
   let renderModal;
 
   if (open && type) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const ModalComponent = (modalLookUp as any)[type];
     renderModal = <ModalComponent data={data} />;
   }

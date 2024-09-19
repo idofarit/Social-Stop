@@ -1,34 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { sampleData } from "../../app/api/sampleData";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppEvent } from "./../../app/types/event";
+import { Timestamp } from "firebase/firestore";
 
 type State = {
   events: AppEvent[];
 };
 
 const initialState: State = {
-  events: sampleData,
+  events: [],
 };
 
 export const eventSlice = createSlice({
   name: "events",
   initialState,
   reducers: {
-    createEvent: (state, action) => {
-      state.events.push(action.payload);
-    },
-    updateEvent: (state, action) => {
-      state.events[
-        state.events.findIndex((ev) => ev.id === action.payload.id)
-      ] = action.payload;
-    },
-    deleteEvent: (state, action) => {
-      state.events.splice(
-        state.events.findIndex((ev) => ev.id === action.payload),
-        1
-      );
+    setEvents: {
+      reducer: (state, action: PayloadAction<AppEvent[]>) => {
+        state.events = action.payload;
+      },
+      prepare: (events: any) => {
+        let eventArray: AppEvent[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        Array.isArray(events) ? (eventArray = events) : eventArray.push(events);
+
+        const mapped = eventArray.map((e: any) => {
+          return { ...e, date: (e.date as Timestamp).toDate().toISOString() };
+        });
+        return { payload: mapped };
+      },
     },
   },
 });
 
-export const { createEvent, updateEvent, deleteEvent } = eventSlice.actions;
+export const { setEvents } = eventSlice.actions;

@@ -1,3 +1,7 @@
+import { deleteDoc, doc } from "firebase/firestore";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import {
   Button,
   Icon,
@@ -11,18 +15,28 @@ import {
   Segment,
   SegmentGroup,
 } from "semantic-ui-react";
-import EventListAttendee from "./EventListAttendee";
+import { db } from "../../../app/config/firebase";
 import { AppEvent } from "../../../app/types/event";
-import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../../app/store/store";
-import { deleteEvent } from "../eventSlice";
+import EventListAttendee from "./EventListAttendee";
 
 type Props = {
   event: AppEvent;
 };
 
 function EventListItem({ event }: Props) {
-  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+
+  async function removeEvent() {
+    setLoading(true);
+    try {
+      await deleteDoc(doc(db, "events", event.id));
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <SegmentGroup>
@@ -45,9 +59,9 @@ function EventListItem({ event }: Props) {
       <Segment>
         <span>
           <Icon name="clock" />
-          Date
+          {event.date}
           <Icon name="marker" />
-          Venue
+          {event.venue}
         </span>
       </Segment>
       <Segment secondary>
@@ -61,7 +75,8 @@ function EventListItem({ event }: Props) {
       <Segment clearing>
         <span>{event.description}</span>
         <Button
-          onClick={() => dispatch(deleteEvent(event.id))}
+          loading={loading}
+          onClick={removeEvent}
           color="red"
           floated="right"
           content="delete"
