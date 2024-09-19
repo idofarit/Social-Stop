@@ -8,6 +8,7 @@ export type AppEvent = {
   hostedBy: string;
   hostPhotoURL: string;
   attendees: Attendee[];
+  isCancelled: boolean;
   category: string;
 };
 

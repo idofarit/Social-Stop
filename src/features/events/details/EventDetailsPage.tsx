@@ -1,43 +1,29 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Grid, GridColumn } from "semantic-ui-react";
+import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { useAppSelector } from "../../../app/store/store";
+import { actions } from "../eventSlice";
+import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
-import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSideBar from "./EventDetailedSideBar";
-import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/store/store";
-import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../../app/config/firebase";
-import { setEvents } from "../eventSlice";
-import toast from "react-hot-toast";
-import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 function EventDetailsPage() {
   const { id } = useParams();
   const event = useAppSelector((state) =>
-    state.events.events.find((e) => e.id === id)
+    state.events.data.find((e) => e.id === id)
   );
-  const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(true);
+  const { loadDocument } = useFireStore("events");
+  const { status } = useAppSelector((state) => state.events);
 
   useEffect(() => {
     if (!id) return;
+    loadDocument(id, actions);
+  }, [id, loadDocument]);
 
-    const unsubscribe = onSnapshot(doc(db, "events", id), {
-      next: (doc) => {
-        dispatch(setEvents({ id: doc.id, ...doc.data() }));
-        setLoading(false);
-      },
-      error: (err) => {
-        console.log(err);
-        toast.error(err.message);
-        setLoading(false);
-      },
-    });
-    return () => unsubscribe();
-  }, [id, dispatch]);
-
-  if (loading) return <LoadingComponent />;
+  if (status === "loading") return <LoadingComponent />;
 
   if (!event) {
     return <h2>Event not found</h2>;
