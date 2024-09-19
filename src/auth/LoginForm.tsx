@@ -1,11 +1,10 @@
-import { Button, Form, FormInput } from "semantic-ui-react";
-import ModalWrapper from "../app/common/modals/ModalWrapper";
-import { FieldValues, useForm } from "react-hook-form";
-import { useAppDispatch } from "../app/store/store";
-import { closeModal } from "../app/common/modals/modalSlice";
-import { signIn } from "./authSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { FieldValues, useForm } from "react-hook-form";
+import { Button, Form, FormInput } from "semantic-ui-react";
+import { closeModal } from "../app/common/modals/modalSlice";
+import ModalWrapper from "../app/common/modals/ModalWrapper";
 import { auth } from "../app/config/firebase";
+import { useAppDispatch } from "../app/store/store";
 
 function LoginForm() {
   const {
@@ -18,12 +17,7 @@ function LoginForm() {
 
   async function onSubmit(data: FieldValues) {
     try {
-      const result = await signInWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
-      dispatch(signIn(result.user));
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       dispatch(closeModal());
     } catch (error: any) {
       console.log(error.message);

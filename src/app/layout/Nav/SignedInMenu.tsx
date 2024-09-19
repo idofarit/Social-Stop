@@ -1,3 +1,4 @@
+import { signOut } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Dropdown,
@@ -6,23 +7,22 @@ import {
   Image,
   MenuItem,
 } from "semantic-ui-react";
-import { useAppDispatch, useAppSelector } from "../../store/store";
-import { signOut } from "../../../auth/authSlice";
+import { auth } from "../../config/firebase";
+import { useAppSelector } from "../../store/store";
 
 function SignedInMenu() {
   const { currentUser } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  function handleSignOut() {
-    dispatch(signOut());
+  async function handleSignOut() {
+    await signOut(auth);
     navigate("/");
   }
 
   return (
     <MenuItem position="right">
       <Image avatar spaced="right" src="/user.png" />
-      <Dropdown pointing="top left" text={currentUser?.email}>
+      <Dropdown pointing="top left" text={currentUser?.email as string}>
         <DropdownMenu>
           <DropdownItem
             as={Link}
