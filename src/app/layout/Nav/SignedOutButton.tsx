@@ -14,7 +14,13 @@ function SignedOutButton() {
         content="Login"
         style={{ margin: "0.3rem" }}
       />
-      <Button basic inverted content="Register" style={{ margin: "0.3rem" }} />
+      <Button
+        onClick={() => dispatch(openModal({ type: "RegisterForm" }))}
+        basic
+        inverted
+        content="Register"
+        style={{ margin: "0.3rem" }}
+      />
     </MenuItem>
   );
 }

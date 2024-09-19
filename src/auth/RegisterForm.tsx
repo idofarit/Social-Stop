@@ -1,12 +1,12 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FieldValues, useForm } from "react-hook-form";
 import { Button, Form, FormInput, Label } from "semantic-ui-react";
 import { closeModal } from "../app/common/modals/modalSlice";
 import ModalWrapper from "../app/common/modals/ModalWrapper";
-import { auth } from "../app/config/firebase";
 import { useAppDispatch } from "../app/store/store";
+import { auth } from "../app/config/firebase";
 
-function LoginForm() {
+function RegisterForm() {
   const {
     register,
     handleSubmit,
@@ -18,7 +18,14 @@ function LoginForm() {
 
   async function onSubmit(data: FieldValues) {
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      const userCreds = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      await updateProfile(userCreds.user, {
+        displayName: data.displayName,
+      });
       dispatch(closeModal());
     } catch (error: any) {
       setError("root.serverError", {
@@ -29,8 +36,15 @@ function LoginForm() {
   }
 
   return (
-    <ModalWrapper header="Signin to SocialStop">
+    <ModalWrapper header="Register to SocialStop">
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput
+          type="text"
+          defaultValue=""
+          placeholder="Display name"
+          {...register("displayName", { required: true })}
+          error={errors.displayName && "Display name is required"}
+        />
         <FormInput
           type="text"
           defaultValue=""
@@ -51,6 +65,7 @@ function LoginForm() {
           {...register("password", { required: true })}
           error={errors.password && "password is required"}
         />
+
         {errors.root && (
           <Label
             basic
@@ -59,7 +74,6 @@ function LoginForm() {
             content={errors.root.serverError.message}
           />
         )}
-
         <Button
           loading={isSubmitting}
           disabled={!isValid || !isDirty || isSubmitting}
@@ -67,10 +81,10 @@ function LoginForm() {
           fluid
           size="large"
           color="teal"
-          content="Login"
+          content="Register"
         />
       </Form>
     </ModalWrapper>
   );
 }
-export default LoginForm;
+export default RegisterForm;
