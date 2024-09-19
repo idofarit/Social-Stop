@@ -5,6 +5,8 @@ import { closeModal } from "../app/common/modals/modalSlice";
 import ModalWrapper from "../app/common/modals/ModalWrapper";
 import { useAppDispatch } from "../app/store/store";
 import { auth } from "../app/config/firebase";
+import { useFireStore } from "../app/hooks/firestore/useFirestore";
+import { Timestamp } from "firebase/firestore";
 
 function RegisterForm() {
   const {
@@ -16,6 +18,8 @@ function RegisterForm() {
 
   const dispatch = useAppDispatch();
 
+  const { set } = useFireStore("profiles");
+
   async function onSubmit(data: FieldValues) {
     try {
       const userCreds = await createUserWithEmailAndPassword(
@@ -25,6 +29,11 @@ function RegisterForm() {
       );
       await updateProfile(userCreds.user, {
         displayName: data.displayName,
+      });
+      await set(userCreds.user.uid, {
+        displayName: data.displayName,
+        email: data.email,
+        createdAt: Timestamp.now(),
       });
       dispatch(closeModal());
     } catch (error: any) {
@@ -36,7 +45,7 @@ function RegisterForm() {
   }
 
   return (
-    <ModalWrapper header="Register to SocialStop">
+    <ModalWrapper header="Register to SocialStop" size="mini">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="text"

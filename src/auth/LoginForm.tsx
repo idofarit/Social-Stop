@@ -1,10 +1,11 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FieldValues, useForm } from "react-hook-form";
-import { Button, Form, FormInput, Label } from "semantic-ui-react";
+import { Button, Divider, Form, FormInput, Label } from "semantic-ui-react";
 import { closeModal } from "../app/common/modals/modalSlice";
 import ModalWrapper from "../app/common/modals/ModalWrapper";
 import { auth } from "../app/config/firebase";
 import { useAppDispatch } from "../app/store/store";
+import SocialLogin from "./SocialLogin";
 
 function LoginForm() {
   const {
@@ -29,7 +30,7 @@ function LoginForm() {
   }
 
   return (
-    <ModalWrapper header="Signin to SocialStop">
+    <ModalWrapper header="Signin to SocialStop" size="mini">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="text"
@@ -69,6 +70,9 @@ function LoginForm() {
           color="teal"
           content="Login"
         />
+
+        <Divider horizontal>or</Divider>
+        <SocialLogin />
       </Form>
     </ModalWrapper>
   );
