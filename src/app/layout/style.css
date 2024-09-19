@@ -34,3 +34,11 @@ body {
 .react-datepicker-wrapper {
   width: 100% !important;
 }
+.ui.pointing.above.prompt.label {
+  display: block !important;
+  margin-bottom: 1rem !important;
+}
+.ui.red.basic.label {
+  display: block !important;
+  margin-bottom: 1rem !important;
+}

@@ -75,14 +75,6 @@ function RegisterForm() {
           error={errors.password && "password is required"}
         />
 
-        {errors.root && (
-          <Label
-            basic
-            color="red"
-            style={{ display: "block", marginBottom: 10 }}
-            content={errors.root.serverError.message}
-          />
-        )}
         <Button
           loading={isSubmitting}
           disabled={!isValid || !isDirty || isSubmitting}
@@ -92,6 +84,14 @@ function RegisterForm() {
           color="teal"
           content="Register"
         />
+        {errors.root && (
+          <Label
+            basic
+            color="red"
+            style={{ display: "block", marginBottom: 10 }}
+            content={errors.root.serverError.message}
+          />
+        )}
       </Form>
     </ModalWrapper>
   );

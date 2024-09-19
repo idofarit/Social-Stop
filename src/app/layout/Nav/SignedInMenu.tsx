@@ -31,6 +31,14 @@ function SignedInMenu() {
             icon="plus"
           />
           <DropdownItem as={Link} text="my profile" icon="user" />
+          {currentUser && (
+            <DropdownItem
+              as={Link}
+              to="/account"
+              text="my account"
+              icon="settings"
+            />
+          )}
           <DropdownItem
             text="Sign out"
             icon="log out"
