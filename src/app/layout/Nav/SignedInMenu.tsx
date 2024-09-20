@@ -30,7 +30,12 @@ function SignedInMenu() {
             text="create event"
             icon="plus"
           />
-          <DropdownItem as={Link} text="my profile" icon="user" />
+          <DropdownItem
+            as={Link}
+            to={`/profiles/${currentUser?.uid}`}
+            text="my profile"
+            icon="user"
+          />
           {currentUser && (
             <DropdownItem
               as={Link}
