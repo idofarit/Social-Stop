@@ -1,21 +1,47 @@
 import {
-  Segment,
-  Header,
-  Button,
-  CommentGroup,
   Comment,
-  CommentAvatar,
-  CommentContent,
-  CommentAuthor,
-  CommentMetadata,
-  CommentText,
   CommentAction,
   CommentActions,
-  FormTextArea,
-  Form,
+  CommentAuthor,
+  CommentAvatar,
+  CommentContent,
+  CommentGroup,
+  CommentMetadata,
+  CommentText,
+  Header,
+  Segment,
 } from "semantic-ui-react";
+import ChatForm from "./ChatForm";
+import { onChildAdded, ref } from "firebase/database";
+import { useState, useEffect } from "react";
+import { fb } from "../../../app/config/firebase";
+import { ChatComment } from "../../../app/types/event";
+import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-function EventDetailedChat() {
+type Props = {
+  eventId: string;
+};
+
+function EventDetailedChat({ eventId }: Props) {
+  const [comments, setComments] = useState<ChatComment[]>([]);
+  const [replyForm, setReplyForm] = useState<any>({
+    open: false,
+    commentId: null,
+  });
+
+  dayjs.extend(relativeTime);
+
+  useEffect(() => {
+    const chatRef = ref(fb, `chat/${eventId}`);
+    const unsubscribe = onChildAdded(chatRef, (data) => {
+      const comment = { ...data.val(), id: data.key };
+      setComments((prevState) => [...prevState, comment]);
+    });
+
+    return () => unsubscribe();
+  }, [eventId]);
   return (
     <>
       <Segment
@@ -30,77 +56,26 @@ function EventDetailedChat() {
 
       <Segment attached>
         <CommentGroup>
-          <Comment>
-            <CommentAvatar src="/user.png" />
-            <CommentContent>
-              <CommentAuthor as="a">Matt</CommentAuthor>
-              <CommentMetadata>
-                <div>Today at 5:42PM</div>
-              </CommentMetadata>
-              <CommentText>How artistic!</CommentText>
-              <CommentActions>
-                <CommentAction>Reply</CommentAction>
-              </CommentActions>
-            </CommentContent>
-          </Comment>
-
-          <Comment>
-            <CommentAvatar src="/user.png" />
-            <CommentContent>
-              <CommentAuthor as="a">Elliot Fu</CommentAuthor>
-              <CommentMetadata>
-                <div>Yesterday at 12:30AM</div>
-              </CommentMetadata>
-              <CommentText>
-                <p>
-                  This has been very useful for my research. Thanks as well!
-                </p>
-              </CommentText>
-              <CommentActions>
-                <Comment.Action>Reply</Comment.Action>
-              </CommentActions>
-            </CommentContent>
-            <CommentGroup>
-              <Comment>
-                <CommentAvatar src="/user.png" />
-                <CommentContent>
-                  <CommentAuthor as="a">Jenny Hess</CommentAuthor>
-                  <CommentMetadata>
-                    <div>Just now</div>
-                  </CommentMetadata>
-                  <CommentText>Elliot you are always so right :)</CommentText>
-                  <CommentActions>
-                    <CommentAction>Reply</CommentAction>
-                  </CommentActions>
-                </CommentContent>
-              </Comment>
-            </CommentGroup>
-          </Comment>
-
-          <Comment>
-            <CommentAvatar src="/user.png" />
-            <CommentContent>
-              <CommentAuthor as="a">Joe Henderson</CommentAuthor>
-              <CommentMetadata>
-                <div>5 days ago</div>
-              </CommentMetadata>
-              <CommentText>Dude, this is awesome. Thanks so much</CommentText>
-              <CommentActions>
-                <CommentAction>Reply</CommentAction>
-              </CommentActions>
-            </CommentContent>
-          </Comment>
-
-          <Form reply>
-            <FormTextArea />
-            <Button
-              content="Add Reply"
-              labelPosition="left"
-              icon="edit"
-              primary
-            />
-          </Form>
+          {comments.map((comment) => (
+            <Comment key={comment.id}>
+              <CommentAvatar src={comment.photoURL || "/user.png"} />
+              <CommentContent>
+                <CommentAuthor as={Link} to={`/profiles/${comment.uid}`}>
+                  {comment.displayName}
+                </CommentAuthor>
+                <CommentMetadata>
+                  <div>{dayjs(comment.date).fromNow()}</div>
+                </CommentMetadata>
+                <CommentText>{comment.text}</CommentText>
+                <CommentActions>
+                  <CommentAction>Reply</CommentAction>
+                </CommentActions>
+              </CommentContent>
+            </Comment>
+          ))}
         </CommentGroup>
+
+        <ChatForm eventId={eventId} />
       </Segment>
     </>
   );

@@ -18,6 +18,7 @@ import { useFireStore } from "../../app/hooks/firestore/useFirestore";
 import { useAppSelector } from "../../app/store/store";
 import { CollectionOptions } from "../../app/hooks/firestore/types";
 import { actions } from "../events/eventSlice";
+import dayjs from "dayjs";
 
 type Props = {
   profile: Profile;
@@ -108,7 +109,9 @@ function ProfileEvents({ profile }: Props) {
                 <CardContent>
                   <CardHeader content={event.title} textAlign="center" />
                   <CardMeta textAlign="center">
-                    <span>{event.date}</span>
+                    <span>
+                      {dayjs(event.date).format("DD-MMM-YYYY h:mm A")}
+                    </span>
                   </CardMeta>
                 </CardContent>
               </Card>

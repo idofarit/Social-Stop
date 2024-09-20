@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
 import { arrayRemove, arrayUnion } from "firebase/firestore";
+import dayjs from "dayjs";
 
 type Props = {
   event: AppEvent;
@@ -74,7 +75,7 @@ function EventDetailedHeader({ event }: Props) {
                   content={event.title}
                   style={{ color: "white" }}
                 />
-                <p>{event.date}</p>
+                <p>{dayjs(event.date).format("DD-MMM-YYYY h:mm A")}</p>
                 <p>
                   Hosted by <strong>{event.hostedBy}</strong>
                 </p>

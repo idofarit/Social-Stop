@@ -34,7 +34,7 @@ function EventDetailsPage() {
       <GridColumn width={10}>
         <EventDetailedHeader event={event} />
         <EventDetailedInfo event={event} />
-        <EventDetailedChat />
+        <EventDetailedChat eventId={event.id} />
       </GridColumn>
       <GridColumn width={6}>
         <EventDetailedSideBar event={event} />

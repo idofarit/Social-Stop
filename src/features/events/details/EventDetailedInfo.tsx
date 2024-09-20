@@ -6,6 +6,7 @@ import {
   SegmentGroup,
 } from "semantic-ui-react";
 import { AppEvent } from "../../../app/types/event";
+import dayjs from "dayjs";
 
 type Props = {
   event: AppEvent;
@@ -30,7 +31,7 @@ function EventDetailedInfo({ event }: Props) {
             <Icon name="calendar" size="large" color="teal" />
           </GridColumn>
           <GridColumn width={15}>
-            <span>{event.date}</span>
+            <span>{dayjs(event.date).format("DD-MMM-YYYY h:mm A")}</span>
           </GridColumn>
         </Grid>
       </Segment>
