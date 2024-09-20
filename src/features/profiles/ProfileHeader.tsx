@@ -28,6 +28,7 @@ function ProfileHeader({ profile }: Props) {
           <ItemGroup>
             <Item>
               <ItemImage
+                referrerPolicy="origin-when-cross-origin"
                 avatar
                 size="small"
                 src={profile.photoURL || "/user.png"}

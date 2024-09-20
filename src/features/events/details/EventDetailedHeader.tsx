@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { Segment, Item, Header, Button, Image } from "semantic-ui-react";
 import { AppEvent } from "../../../app/types/event";
+import { useAppSelector } from "../../../app/store/store";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
+import { arrayRemove, arrayUnion } from "firebase/firestore";
 
 type Props = {
   event: AppEvent;
@@ -10,6 +15,11 @@ function EventDetailedHeader({ event }: Props) {
   const eventImageStyle = {
     filter: "brightness(30%)",
   };
+  const [loading, setLoading] = useState(false);
+
+  const { currentUser } = useAppSelector((state) => state.auth);
+
+  const { update } = useFireStore("events");
 
   const eventImageTextStyle = {
     position: "absolute",
@@ -20,10 +30,36 @@ function EventDetailedHeader({ event }: Props) {
     color: "white",
   };
 
+  async function toggleAttendance() {
+    if (!currentUser) {
+      toast.error("Must be logged in to do this");
+    }
+    setLoading(true);
+    if (event.isGoing) {
+      const attendee = event.attendees.find((x) => x.id === currentUser?.uid);
+      await update(event.id, {
+        attendees: arrayRemove(attendee),
+        attendeeIds: arrayRemove(currentUser?.uid),
+      });
+      setLoading(false);
+    } else {
+      await update(event.id, {
+        attendees: arrayUnion({
+          id: currentUser?.uid,
+          displayName: currentUser?.displayName,
+          photoURL: currentUser?.photoURL,
+        }),
+        attendeeIds: arrayUnion(currentUser?.uid),
+      });
+      setLoading(false);
+    }
+  }
+
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
         <Image
+          referrerPolicy="origin-when-cross-origin"
           src={`/categoryImages/${event.category}.jpg`}
           fluid
           style={eventImageStyle}
@@ -48,18 +84,24 @@ function EventDetailedHeader({ event }: Props) {
         </Segment>
       </Segment>
 
-      <Segment attached="bottom">
-        <Button>Cancel My Place</Button>
-        <Button color="teal">JOIN THIS EVENT</Button>
-
-        <Button
-          color="orange"
-          floated="right"
-          as={Link}
-          to={`/manage/${event.id}`}
-        >
-          Manage Event
-        </Button>
+      <Segment attached="bottom" clearing>
+        {event.isHost ? (
+          <Button
+            color="orange"
+            floated="right"
+            as={Link}
+            to={`/manage/${event.id}`}
+          >
+            Manage Event
+          </Button>
+        ) : (
+          <Button
+            loading={loading}
+            onClick={toggleAttendance}
+            color={event.isGoing ? "grey" : "teal"}
+            content={event.isGoing ? "Cancel my place" : "Join"}
+          />
+        )}
       </Segment>
     </Segment.Group>
   );

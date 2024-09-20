@@ -27,6 +27,7 @@ function EventListItem({ event }: Props) {
         <ItemGroup>
           <Item>
             <ItemImage
+              referrerPolicy="origin-when-cross-origin"
               size="tiny"
               circular
               src={event.hostPhotoURL || "/user.png"}

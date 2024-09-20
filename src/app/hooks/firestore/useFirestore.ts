@@ -12,6 +12,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import toast from "react-hot-toast";
+import { CollectionOptions } from "./types";
+import { getQuery } from "./getQuery";
 
 type ListnerState = {
   name?: string;
@@ -34,9 +36,11 @@ export const useFireStore = <T extends DocumentData>(path: string) => {
   }, []);
   const dispatch = useAppDispatch();
   const loadCollection = useCallback(
-    (actions: GenericActions<T>) => {
+    (actions: GenericActions<T>, options?: CollectionOptions) => {
       dispatch(actions.loading());
-      const query = collection(db, path);
+
+      const query = getQuery(path, options);
+
       const listener = onSnapshot(query, {
         next: (querySnapshot) => {
           const data: DocumentData[] = [];
@@ -61,7 +65,9 @@ export const useFireStore = <T extends DocumentData>(path: string) => {
   const loadDocument = useCallback(
     (id: string, actions: GenericActions<T>) => {
       dispatch(actions.loading());
+
       const docRef = doc(db, path, id);
+
       const listener = onSnapshot(docRef, {
         next: (doc) => {
           if (!doc.exists) {
@@ -83,7 +89,9 @@ export const useFireStore = <T extends DocumentData>(path: string) => {
   const create = async (data: T) => {
     try {
       const ref = doc(collection(db, path));
+
       await setDoc(ref, data);
+
       return ref;
     } catch (error: any) {
       console.log(error);

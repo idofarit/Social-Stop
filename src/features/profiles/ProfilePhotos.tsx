@@ -79,7 +79,10 @@ function ProfilePhotos({ profile }: Props) {
               <CardGroup itemsPerRow={5}>
                 {photos.map((photo) => (
                   <Card key={photo.id}>
-                    <Image src={photo.url} />
+                    <Image
+                      referrerPolicy="origin-when-cross-origin"
+                      src={photo.url}
+                    />
                     {isCurrenUser && (
                       <ButtonGroup>
                         <Button

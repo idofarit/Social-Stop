@@ -42,3 +42,11 @@ body {
   display: block !important;
   margin-bottom: 1rem !important;
 }
+
+.react-calendar {
+  width: 100% !important;
+  border: none !important;
+}
+.ui.attached.header {
+  border: none !important;
+}

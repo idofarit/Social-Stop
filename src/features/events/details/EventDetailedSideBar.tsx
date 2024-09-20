@@ -5,9 +5,16 @@ import {
   ItemHeader,
   ItemImage,
   ItemGroup,
+  Label,
 } from "semantic-ui-react";
+import { AppEvent } from "../../../app/types/event";
+import { Link } from "react-router-dom";
 
-function EventDetailedSideBar() {
+type Props = {
+  event: AppEvent;
+};
+
+function EventDetailedSideBar({ event }: Props) {
   return (
     <>
       <Segment
@@ -18,26 +25,34 @@ function EventDetailedSideBar() {
         inverted
         color="teal"
       >
-        2 People Going
+        {event.attendees.length} people{" "}
+        {event.attendees.length > 1 ? "are" : "is"} going
       </Segment>
       <Segment attached>
         <ItemGroup relaxed divided>
-          <Item style={{ position: "relative" }}>
-            <ItemImage size="tiny" src="/user.png" />
-            <ItemContent verticalAlign="middle">
-              <ItemHeader as="h3">
-                <span>Tom</span>
-              </ItemHeader>
-            </ItemContent>
-          </Item>
-          <Item style={{ position: "relative" }}>
-            <ItemImage size="tiny" src="/user.png" />
-            <ItemContent verticalAlign="middle">
-              <ItemHeader as="h3">
-                <span>Bob</span>
-              </ItemHeader>
-            </ItemContent>
-          </Item>
+          {event.attendees.map((attendee) => (
+            <Item style={{ position: "relative" }} key={attendee.id}>
+              {event.hostUid === attendee.id && (
+                <Label
+                  style={{ position: "absolute" }}
+                  color="blue"
+                  ribbon="right"
+                >
+                  Host
+                </Label>
+              )}
+              <ItemImage
+                referrerPolicy="strict-origin-when-cross-origin"
+                size="tiny"
+                src={attendee.photoURL || "/user.png"}
+              />
+              <ItemContent verticalAlign="middle">
+                <ItemHeader as={Link} to={`/profiles/${attendee.id}`}>
+                  <span>{attendee.displayName}</span>
+                </ItemHeader>
+              </ItemContent>
+            </Item>
+          ))}
         </ItemGroup>
       </Segment>
     </>

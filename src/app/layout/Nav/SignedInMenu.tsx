@@ -21,7 +21,12 @@ function SignedInMenu() {
 
   return (
     <MenuItem position="right">
-      <Image avatar spaced="right" src={currentUser?.photoURL || "/user.png"} />
+      <Image
+        avatar
+        spaced="right"
+        src={currentUser?.photoURL || "/user.png"}
+        referrerPolicy="origin-when-cross-origin"
+      />
       <Dropdown pointing="top left" text={currentUser?.displayName as string}>
         <DropdownMenu>
           <DropdownItem
