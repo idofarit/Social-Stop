@@ -35,7 +35,10 @@ function EventDashboard() {
         )}
       </GridColumn>
       <GridColumn width={6}>
-        <div className="ui fixed top sticky" style={{ top: 98, width: 405 }}>
+        <div
+          className="ui fixed top sticky"
+          style={{ top: 98, width: 405, zIndex: -1 }}
+        >
           <EventFilters setQuery={setQuery} />
         </div>
       </GridColumn>
