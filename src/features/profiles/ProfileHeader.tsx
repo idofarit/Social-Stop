@@ -1,3 +1,6 @@
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
   Button,
   Divider,
@@ -14,12 +17,10 @@ import {
   Statistic,
   StatisticGroup,
 } from "semantic-ui-react";
-import { Profile } from "../../app/types/profile";
-import { useFireStore } from "../../app/hooks/firestore/useFirestore";
+import { batchFollowToggle } from "../../app/actions/fireStoreActions";
 import { auth, db } from "../../app/config/firebase";
-import { doc, getDoc, increment } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../app/store/store";
+import { Profile } from "../../app/types/profile";
 import { actions } from "./profileSlice";
 
 type Props = {
@@ -29,13 +30,6 @@ type Props = {
 function ProfileHeader({ profile }: Props) {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { update } = useFireStore("profiles");
-  const { set: setFollower, remove: removeFollower } = useFireStore(
-    `profiles/${profile.id}/followers`
-  );
-  const { set: setFollowing, remove: removeFollowing } = useFireStore(
-    `profiles/${auth.currentUser?.uid}/following`
-  );
 
   useEffect(() => {
     const docRef = doc(
@@ -52,34 +46,14 @@ function ProfileHeader({ profile }: Props) {
   async function handleFollowToggle(follow: boolean) {
     if (!profile.id || !auth.currentUser?.uid) return;
     setLoading(true);
-
-    if (follow) {
-      await update(auth.currentUser.uid, {
-        followingCount: increment(1),
-      });
-      await update(profile.id, {
-        followerCount: increment(1),
-      });
-      await setFollowing(profile.id, {
-        displayName: profile.displayName,
-        photoURL: profile.photoURL,
-      });
-      await setFollower(auth.currentUser.uid, {
-        displayName: auth.currentUser.displayName,
-        photoURL: auth.currentUser.photoURL,
-      });
-    } else {
-      await update(auth.currentUser.uid, {
-        followingCount: increment(-1),
-      });
-      await update(profile.id, {
-        followerCount: increment(-1),
-      });
-      await removeFollowing(profile.id);
-      await removeFollower(auth.currentUser.uid);
+    try {
+      await batchFollowToggle(profile, follow);
+      dispatch(actions.setFollowing({ id: profile.id, isFollowing: follow }));
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-    dispatch(actions.setFollowing({ id: profile.id, isFollowing: follow }));
-    setLoading(false);
   }
 
   return (

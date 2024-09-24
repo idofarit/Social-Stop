@@ -19,6 +19,7 @@ function EventDashboard() {
   useEffect(() => {
     loadCollection(actions, {
       queries: query,
+      limit: 1,
     });
   }, [loadCollection, query]);
 
