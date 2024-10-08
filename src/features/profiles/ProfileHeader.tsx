@@ -98,7 +98,7 @@ function ProfileHeader({ profile }: Props) {
               <Button
                 basic
                 fluid
-                color={profile.isFollowing ? "red" : "teal"}
+                color={profile.isFollowing ? "red" : "blue"}
                 content={profile.isFollowing ? "Unfollow" : "Follow"}
                 onClick={() => handleFollowToggle(!profile.isFollowing)}
                 loading={loading}
