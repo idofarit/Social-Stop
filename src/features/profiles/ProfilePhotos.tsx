@@ -1,4 +1,7 @@
+import { updateProfile } from "firebase/auth";
+import { deleteObject, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
   Button,
   ButtonGroup,
@@ -10,15 +13,13 @@ import {
   Image,
   TabPane,
 } from "semantic-ui-react";
+import { batchSetPhoto } from "../../app/actions/fireStoreActions";
 import { auth, storage } from "../../app/config/firebase";
-import { Photo, Profile } from "../../app/types/profile";
-import PhotoUpload from "./PhotoUpload";
-import { useAppSelector } from "../../app/store/store";
 import { useFireStore } from "../../app/hooks/firestore/useFirestore";
+import { useAppSelector } from "../../app/store/store";
+import { Photo, Profile } from "../../app/types/profile";
 import { actions } from "./photoSlice";
-import { updateProfile } from "firebase/auth";
-import { deleteObject, ref } from "firebase/storage";
-import toast from "react-hot-toast";
+import PhotoUpload from "./PhotoUpload";
 
 type Props = {
   profile: Profile;
@@ -31,16 +32,13 @@ function ProfilePhotos({ profile }: Props) {
   const { loadCollection, remove } = useFireStore(
     `profiles/${profile.id}/photos`
   );
-  const { update } = useFireStore("profiles");
 
   useEffect(() => {
     loadCollection(actions);
   }, [loadCollection]);
 
-  async function handleSubmit(photo: Photo) {
-    await update(profile.id, {
-      photoURL: photo.url,
-    });
+  async function handleSetMain(photo: Photo) {
+    await batchSetPhoto(photo.url);
     await updateProfile(auth.currentUser!, {
       photoURL: photo.url,
     });
@@ -86,7 +84,7 @@ function ProfilePhotos({ profile }: Props) {
                     {isCurrenUser && (
                       <ButtonGroup>
                         <Button
-                          onClick={() => handleSubmit(photo)}
+                          onClick={() => handleSetMain(photo)}
                           disabled={photo.url === profile.photoURL}
                           basic
                           color="green"
