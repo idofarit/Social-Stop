@@ -1,14 +1,8 @@
-import {
-  CardGroup,
-  Grid,
-  GridColumn,
-  Header,
-  TabPane,
-} from "semantic-ui-react";
+import { useEffect } from "react";
+import { Card, Grid, Header, TabPane } from "semantic-ui-react";
+import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
 import { useAppSelector } from "../../../app/store/store";
 import FollowCard from "./FollowCard";
-import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
-import { useEffect } from "react";
 import { actions } from "./followSlice";
 
 type Props = {
@@ -16,7 +10,7 @@ type Props = {
   activeTab: number;
 };
 
-function FollowTab({ profileId, activeTab }: Props) {
+export default function FollowTab({ profileId, activeTab }: Props) {
   const { data, status } = useAppSelector((state) => state.follows);
   const { loadCollection: loadFollowing } = useFireStore(
     `profiles/${profileId}/following`
@@ -26,10 +20,10 @@ function FollowTab({ profileId, activeTab }: Props) {
   );
 
   useEffect(() => {
-    if (activeTab === 3) {
+    if (activeTab === 2) {
       loadFollowers(actions);
     }
-    if (activeTab === 4) {
+    if (activeTab === 3) {
       loadFollowing(actions);
     }
   }, [activeTab, loadFollowers, loadFollowing]);
@@ -37,22 +31,21 @@ function FollowTab({ profileId, activeTab }: Props) {
   return (
     <TabPane loading={status === "loading"}>
       <Grid>
-        <GridColumn width={16}>
+        <Grid.Column width={16}>
           <Header
             floated="left"
             icon="user"
-            content={activeTab === 3 ? "Followers" : "Following"}
+            content={activeTab === 2 ? "Followers" : "Following"}
           />
-        </GridColumn>
-        <GridColumn width={16}>
-          <CardGroup itemsPerRow={5}>
+        </Grid.Column>
+        <Grid.Column width={16}>
+          <Card.Group itemsPerRow={5}>
             {data.map((profile) => (
               <FollowCard profile={profile} key={profile.id} />
             ))}
-          </CardGroup>
-        </GridColumn>
+          </Card.Group>
+        </Grid.Column>
       </Grid>
     </TabPane>
   );
 }
-export default FollowTab;
