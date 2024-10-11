@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { useAppDispatch } from "../store/store";
 import { logOut, signIn } from "../../auth/authSlice";
-import NavBar from "./nav/NavBar";
+import NavBar from "./nav/navbar";
 
 function App() {
   const location = useLocation();
