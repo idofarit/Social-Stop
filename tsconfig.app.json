@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/components/*": ["src/components/*"]
-    },
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -19,31 +15,10 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "exclude": [
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts",
-    "node_modules",
-    "obj",
-    "**/*.spec.ts"
-  ],
-  "include": [
-    "src",
-    "src/**/*.ts",
-    "@types/**/*.d.ts",
-    "tests/**/*.ts",
-    "node_modules/axios",
-    "node_modules/redux-thunk"
-  ]
+  "include": ["src"]
 }
