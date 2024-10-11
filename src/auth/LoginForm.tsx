@@ -4,10 +4,15 @@ import { Button, Divider, Form, FormInput, Label } from "semantic-ui-react";
 import { closeModal } from "../app/common/modals/modalSlice";
 import ModalWrapper from "../app/common/modals/ModalWrapper";
 import { auth } from "../app/config/firebase";
-import { useAppDispatch } from "../app/store/store";
+import { useAppDispatch, useAppSelector } from "../app/store/store";
 import SocialLogin from "./SocialLogin";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
+  const navigate = useNavigate();
+
+  const { data: location } = useAppSelector((state) => state.modal);
+
   const {
     register,
     handleSubmit,
@@ -21,6 +26,7 @@ function LoginForm() {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       dispatch(closeModal());
+      navigate(location.from);
     } catch (error: any) {
       setError("root.serverError", {
         type: "400",

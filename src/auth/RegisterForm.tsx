@@ -7,6 +7,7 @@ import { useAppDispatch } from "../app/store/store";
 import { auth } from "../app/config/firebase";
 import { useFireStore } from "../app/hooks/firestore/useFirestore";
 import { Timestamp } from "firebase/firestore";
+import { signIn } from "./authSlice";
 
 function RegisterForm() {
   const {
@@ -35,6 +36,7 @@ function RegisterForm() {
         email: data.email,
         createdAt: Timestamp.now(),
       });
+      dispatch(signIn(userCreds.user));
       dispatch(closeModal());
     } catch (error: any) {
       setError("root.serverError", {

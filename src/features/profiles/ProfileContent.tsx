@@ -4,6 +4,7 @@ import { Profile } from "../../app/types/profile";
 import ProfileAbout from "./ProfileAbout";
 import ProfilePhotos from "./ProfilePhotos";
 import FollowTab from "./follow/FollowTab";
+import ProfileEvents from "./ProfileEvents";
 
 type Props = {
   profile: Profile;
@@ -15,6 +16,7 @@ function ProfileContent({ profile }: Props) {
   const panes = [
     { menuItem: "About", render: () => <ProfileAbout profile={profile} /> },
     { menuItem: "Photos", render: () => <ProfilePhotos profile={profile} /> },
+    { menuItem: "Events", render: () => <ProfileEvents profile={profile} /> },
     {
       menuItem: "Followers",
       render: () => <FollowTab profileId={profile.id} activeTab={activeTab} />,

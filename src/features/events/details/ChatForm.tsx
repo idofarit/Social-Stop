@@ -30,6 +30,7 @@ function ChatForm({ eventId, parentId, setReplyForm }: Props) {
   async function onSubmit(data: FieldValues) {
     if (!authenticated)
       return navigate("/unauthorised", { state: { from: location.pathname } });
+
     try {
       const chatRef = ref(fb, `chat/${eventId}`);
       const newChatRef = push(chatRef);

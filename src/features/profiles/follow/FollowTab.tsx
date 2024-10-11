@@ -20,10 +20,10 @@ export default function FollowTab({ profileId, activeTab }: Props) {
   );
 
   useEffect(() => {
-    if (activeTab === 2) {
+    if (activeTab === 3) {
       loadFollowers(actions);
     }
-    if (activeTab === 3) {
+    if (activeTab === 4) {
       loadFollowing(actions);
     }
   }, [activeTab, loadFollowers, loadFollowing]);
@@ -35,7 +35,7 @@ export default function FollowTab({ profileId, activeTab }: Props) {
           <Header
             floated="left"
             icon="user"
-            content={activeTab === 2 ? "Followers" : "Following"}
+            content={activeTab === 3 ? "Followers" : "Following"}
           />
         </Grid.Column>
         <Grid.Column width={16}>

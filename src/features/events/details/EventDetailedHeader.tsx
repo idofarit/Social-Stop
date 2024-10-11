@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-import { Segment, Item, Header, Button, Image } from "semantic-ui-react";
-import { AppEvent } from "../../../app/types/event";
-import { useAppSelector } from "../../../app/store/store";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
-import { arrayRemove, arrayUnion } from "firebase/firestore";
 import dayjs from "dayjs";
+import { arrayRemove, arrayUnion } from "firebase/firestore";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Button, Header, Image, Item, Segment } from "semantic-ui-react";
+import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
+import { useAppSelector } from "../../../app/store/store";
+import { AppEvent } from "../../../app/types/event";
 
 type Props = {
   event: AppEvent;
@@ -16,11 +15,16 @@ function EventDetailedHeader({ event }: Props) {
   const eventImageStyle = {
     filter: "brightness(30%)",
   };
+
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
 
   const { currentUser } = useAppSelector((state) => state.auth);
 
   const { update } = useFireStore("events");
+
+  const location = useLocation();
 
   const eventImageTextStyle = {
     position: "absolute",
@@ -32,9 +36,9 @@ function EventDetailedHeader({ event }: Props) {
   };
 
   async function toggleAttendance() {
-    if (!currentUser) {
-      toast.error("Must be logged in to do this");
-    }
+    if (!currentUser)
+      return navigate("/unauthorised", { state: { from: location.pathname } });
+
     setLoading(true);
     if (event.isGoing) {
       const attendee = event.attendees.find((x) => x.id === currentUser?.uid);
