@@ -1,13 +1,13 @@
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import { Container } from "semantic-ui-react";
+import { logOut, signIn } from "../../auth/authSlice";
 import HomePage from "../../features/Home/HomePage";
 import ModalManager from "../common/modals/ModalManager";
-import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { useAppDispatch } from "../store/store";
-import { logOut, signIn } from "../../auth/authSlice";
-import NavBar from "./nav/navbar";
+import NavBar from "./nav/Navbar";
 
 function App() {
   const location = useLocation();
