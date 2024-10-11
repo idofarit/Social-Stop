@@ -23,6 +23,7 @@ import { actions } from "../eventSlice";
 import { categoryOptions } from "./categoryOptions";
 
 function EventForm() {
+  const { loadDocument, create, update } = useFireStore("events");
   const {
     register,
     handleSubmit,
@@ -35,19 +36,12 @@ function EventForm() {
       if (event) return { ...event, date: new Date(event.date) };
     },
   });
-
-  const { loadDocument, create, update } = useFireStore("events");
-
-  const { status } = useAppSelector((state) => state.events);
-
   const { id } = useParams();
-
-  const { currentUser } = useAppSelector((state) => state.auth);
-
   const event = useAppSelector((state) =>
     state.events.data.find((e) => e.id === id)
   );
-
+  const { status } = useAppSelector((state) => state.events);
+  const { currentUser } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,16 +61,16 @@ function EventForm() {
     if (!currentUser) return;
     const ref = await create({
       ...data,
-      hostUid: currentUser?.uid,
+      hostUid: currentUser.uid,
       hostedBy: currentUser.displayName,
       hostPhotoURL: currentUser.photoURL,
-      date: Timestamp.fromDate(data.date as unknown as Date),
       attendees: arrayUnion({
         id: currentUser.uid,
         displayName: currentUser.displayName,
         photoURL: currentUser.photoURL,
       }),
       attendeeIds: arrayUnion(currentUser.uid),
+      date: Timestamp.fromDate(data.date as unknown as Date),
     });
     return ref;
   }
