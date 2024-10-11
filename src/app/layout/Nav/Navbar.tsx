@@ -4,7 +4,7 @@ import { useAppSelector } from "../../store/store";
 import SignedInMenu from "./SignedInMenu";
 import SignedOutButton from "./SignedOutButton";
 
-function Navbar() {
+export default function NavBar() {
   const { authenticated } = useAppSelector((state) => state.auth);
 
   return (
@@ -36,4 +36,3 @@ function Navbar() {
     </Menu>
   );
 }
-export default Navbar;
