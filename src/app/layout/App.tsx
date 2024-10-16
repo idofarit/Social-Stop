@@ -7,7 +7,7 @@ import HomePage from "../../features/Home/HomePage";
 import ModalManager from "../common/modals/ModalManager";
 import { auth } from "../config/firebase";
 import { useAppDispatch } from "../store/store";
-import Navbar from "./nav/Navbar";
+import Navbar from "./Nav/Navbar";
 
 function App() {
   const location = useLocation();
