@@ -14,7 +14,7 @@
     "./src/app/layout/emptystate.tsx",
     "./src/app/layout/loadingcomponent.tsx",
     "./src/app/layout/unauthcomponent.tsx",
-    "./src/app/layout/nav/navbar.tsx",
+    "./src/app/layout/Nav/Navbar.tsx",
     "./src/app/layout/nav/signedinmenu.tsx",
     "./src/app/layout/nav/signedoutbutton.tsx",
     "./src/app/router/requireauth.tsx",
