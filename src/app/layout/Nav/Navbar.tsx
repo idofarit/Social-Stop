@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { Button, Container, Menu, MenuItem } from "semantic-ui-react";
-import { useAppSelector } from "../../store/store";
 import SignedInMenu from "./SignedInMenu";
 import SignedOutButton from "./SignedOutButton";
+import { useAppSelector } from "../../store/store.ts";
 
-export default function NavBar() {
+export default function Navbar() {
   const { authenticated } = useAppSelector((state) => state.auth);
 
   return (

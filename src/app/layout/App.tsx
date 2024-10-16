@@ -7,7 +7,7 @@ import HomePage from "../../features/Home/HomePage";
 import ModalManager from "../common/modals/ModalManager";
 import { auth } from "../config/firebase";
 import { useAppDispatch } from "../store/store";
-import NavBar from "./Nav/NavBar";
+import Navbar from "./nav/Navbar";
 
 function App() {
   const location = useLocation();
@@ -35,7 +35,7 @@ function App() {
         <>
           <ScrollRestoration />
           <ModalManager />
-          <NavBar />
+          <Navbar />
           <Container className="main">
             <Outlet />
           </Container>
