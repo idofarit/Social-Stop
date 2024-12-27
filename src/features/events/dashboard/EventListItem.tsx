@@ -15,6 +15,7 @@ import {
 } from "semantic-ui-react";
 import { AppEvent } from "../../../app/types/event";
 import EventListAttendee from "./EventListAttendee";
+import dayjs from "dayjs";
 
 type Props = {
   event: AppEvent;
@@ -51,7 +52,7 @@ function EventListItem({ event }: Props) {
       <Segment>
         <span>
           <Icon name="clock" />
-          {event.date}
+          {dayjs(event.date).format("DD-MMM-YYYY h:mm A")}
           <Icon name="marker" />
           {event.venue}
         </span>
