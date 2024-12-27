@@ -50,3 +50,9 @@ body {
 .ui.attached.header {
   border: none !important;
 }
+
+@media screen and (min-width: 900px) {
+  .ui.grid {
+    flex-direction: column !important;
+  }
+}
