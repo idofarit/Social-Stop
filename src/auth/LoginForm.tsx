@@ -1,12 +1,11 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FieldValues, useForm } from "react-hook-form";
-import { Button, Divider, Form, FormInput, Label } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, FormInput, Label } from "semantic-ui-react";
 import { closeModal } from "../app/common/modals/modalSlice";
 import ModalWrapper from "../app/common/modals/ModalWrapper";
 import { auth } from "../app/config/firebase";
 import { useAppDispatch, useAppSelector } from "../app/store/store";
-import SocialLogin from "./SocialLogin";
-import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -77,8 +76,8 @@ function LoginForm() {
           content="Login"
         />
 
-        <Divider horizontal>or</Divider>
-        <SocialLogin />
+        {/* <Divider horizontal>or</Divider>
+        <SocialLogin /> */}
       </Form>
     </ModalWrapper>
   );
