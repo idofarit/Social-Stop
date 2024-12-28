@@ -51,7 +51,7 @@ body {
   border: none !important;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 600px) {
   .ui.grid {
     flex-direction: column;
   }
