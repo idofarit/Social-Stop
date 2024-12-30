@@ -58,6 +58,6 @@ body {
   .stick_bar {
     position: relative !important;
     top: 0px !important;
-    width: 100% !important;
+    /* width: 100% !important; */
   }
 }
