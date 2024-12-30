@@ -8,7 +8,7 @@ export default function Navbar() {
   const { authenticated } = useAppSelector((state) => state.auth);
 
   return (
-    <Menu inverted={true} fixed="top">
+    <Menu inverted={true} fixed="top" pointing className="mobile only row">
       <Container>
         <MenuItem header as={NavLink} to={"/"}>
           <img
