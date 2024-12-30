@@ -50,21 +50,3 @@ body {
 .ui.attached.header {
   border: none !important;
 }
-
-@media screen and (max-width: 600px) {
-  .ui.grid {
-    flex-direction: column;
-  }
-  .ui.fixed.sticky {
-    position: relative !important;
-    top: 0px;
-  }
-  .ten.wide.column {
-    width: 100% !important;
-  }
-  .six.wide.column {
-    margin: auto;
-    justify-content: center;
-    display: flex;
-  }
-}

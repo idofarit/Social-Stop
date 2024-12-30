@@ -49,7 +49,7 @@ function EventDashboard() {
 
   return (
     <Grid>
-      <GridColumn width={10}>
+      <GridColumn width={10} className="grid_ten">
         {!loadedInitial ? (
           <>
             <EventListItemPlaceholder />
@@ -70,7 +70,7 @@ function EventDashboard() {
           </>
         )}
       </GridColumn>
-      <GridColumn width={6}>
+      <GridColumn width={6} className="grid_six">
         <div
           className="ui fixed top sticky"
           style={{ top: 98, width: 405, zIndex: 1 }}
