@@ -50,3 +50,13 @@ body {
 .ui.attached.header {
   border: none !important;
 }
+
+@media only screen and (max-width: 767px) {
+  .grid_ten {
+    order: 2;
+  }
+  .stick_bar {
+    position: relative;
+    top: 0px;
+  }
+}

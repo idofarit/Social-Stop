@@ -72,7 +72,7 @@ function EventDashboard() {
       </GridColumn>
       <GridColumn mobile={16} computer={5} width={6} className="grid_six">
         <div
-          className="ui fixed top sticky"
+          className="ui fixed top sticky stick_bar"
           style={{ top: 98, width: 405, zIndex: 1 }}
         >
           <EventFilters setQuery={setQuery} />
