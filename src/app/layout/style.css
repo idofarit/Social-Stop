@@ -54,6 +54,7 @@ body {
 @media only screen and (max-width: 767px) {
   .grid_ten {
     order: 2 !important;
+    width: 62.5% !important;
   }
   .stick_bar {
     position: relative !important;
