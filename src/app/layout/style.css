@@ -50,3 +50,9 @@ body {
 .ui.attached.header {
   border: none !important;
 }
+
+@media screen and (max-width: 500px) {
+  .grid_ten {
+    width: 100% !important;
+  }
+}
