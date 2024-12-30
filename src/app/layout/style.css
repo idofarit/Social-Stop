@@ -53,10 +53,11 @@ body {
 
 @media only screen and (max-width: 767px) {
   .grid_ten {
-    order: 2;
+    order: 2 !important;
   }
   .stick_bar {
-    position: relative;
-    top: 0px;
+    position: relative !important;
+    top: 0px !important;
+    width: 100% !important;
   }
 }
