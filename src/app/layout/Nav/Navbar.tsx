@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { Button, Container, Menu, MenuItem } from "semantic-ui-react";
+import { useAppSelector } from "../../store/store.ts";
 import SignedInMenu from "./SignedInMenu";
 import SignedOutButton from "./SignedOutButton";
-import { useAppSelector } from "../../store/store.ts";
 
 export default function Navbar() {
   const { authenticated } = useAppSelector((state) => state.auth);
@@ -19,7 +19,7 @@ export default function Navbar() {
           &nbsp; Social-Stop
         </MenuItem>
         <MenuItem name="Events" as={NavLink} to={"/events"} />
-        <MenuItem name="Scratch" as={NavLink} to={"/scratch"} />
+
         <MenuItem>
           <Button
             as={NavLink}
