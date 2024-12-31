@@ -62,7 +62,7 @@ body {
   }
 }
 @media only screen and (max-width: 1276px) {
-  .ui[class*="two column"].doubling.grid > .column:not(.row) {
+  .ui.grid > [class*="sixteen wide"].column {
     width: auto !important;
   }
 }
