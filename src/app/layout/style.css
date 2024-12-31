@@ -62,7 +62,7 @@ body {
   }
 }
 @media only screen and (max-width: 1276px) {
-  .grid_six {
+  .ui.grid {
     width: auto !important;
   }
 }
