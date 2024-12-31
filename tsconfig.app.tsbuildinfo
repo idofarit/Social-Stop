@@ -57,10 +57,7 @@
     "./src/features/profiles/profileslice.ts",
     "./src/features/profiles/follow/followcard.tsx",
     "./src/features/profiles/follow/followtab.tsx",
-    "./src/features/profiles/follow/followslice.ts",
-    "./src/features/scratch/scratch.tsx",
-    "./src/features/scratch/testmodal.tsx",
-    "./src/features/scratch/testslice.ts"
+    "./src/features/profiles/follow/followslice.ts"
   ],
   "version": "5.6.2"
 }

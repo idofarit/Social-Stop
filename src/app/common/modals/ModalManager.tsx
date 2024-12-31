@@ -1,11 +1,10 @@
 import LoginForm from "../../../auth/LoginForm";
 import RegisterForm from "../../../auth/RegisterForm";
-import TestModal from "../../../features/scratch/TestModal";
+
 import { useAppSelector } from "../../store/store";
 
 function ModalManager() {
   const modalLookUp = {
-    TestModal,
     LoginForm,
     RegisterForm,
   };
