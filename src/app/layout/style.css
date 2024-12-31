@@ -61,9 +61,3 @@ body {
     width: 100% !important;
   }
 }
-
-@media only screen and (max-width: 991px) {
-  .ui.column.grid {
-    width: auto !important;
-  }
-}

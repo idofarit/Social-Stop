@@ -1,13 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../layout/App";
+import AccountPage from "../../auth/AccountPage";
 import EventDashboard from "../../features/events/dashboard/EventDashboard";
 import EventDetailsPage from "../../features/events/details/EventDetailsPage";
 import EventForm from "../../features/events/Form/EventForm";
-import Scratch from "../../features/scratch/Scratch";
-import AccountPage from "../../auth/AccountPage";
 import ProfilePage from "../../features/profiles/ProfilePage";
-import RequireAuth from "./RequireAuth";
+import App from "../layout/App";
 import UnauthComponent from "../layout/UnauthComponent";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter([
   {
@@ -25,10 +24,7 @@ export const router = createBrowserRouter([
       },
       { path: "/events", element: <EventDashboard /> },
       { path: "/events/:id", element: <EventDetailsPage /> },
-      {
-        path: "/scratch",
-        element: <Scratch />,
-      },
+
       { path: "/unauthorised", element: <UnauthComponent /> },
     ],
   },
