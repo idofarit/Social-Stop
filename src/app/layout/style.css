@@ -58,5 +58,11 @@ body {
   .stick_bar {
     position: relative !important;
     top: 0px !important;
+    width: 100% !important;
+  }
+}
+@media only screen and (max-width: 1276px) {
+  .grid_six {
+    width: auto !important;
   }
 }

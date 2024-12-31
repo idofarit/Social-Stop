@@ -48,7 +48,7 @@ function EventDashboard() {
   }
 
   return (
-    <Grid stackable columns={2}>
+    <Grid stackable doubling columns={2}>
       <GridColumn width={10} mobile={16} className="grid_ten">
         {!loadedInitial ? (
           <>
