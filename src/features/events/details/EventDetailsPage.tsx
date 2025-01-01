@@ -30,13 +30,13 @@ function EventDetailsPage() {
   }
 
   return (
-    <Grid>
-      <GridColumn width={10}>
+    <Grid stackable columns={2}>
+      <GridColumn mobile={16} tablet={8} computer={16}>
         <EventDetailedHeader event={event} />
         <EventDetailedInfo event={event} />
         <EventDetailedChat eventId={event.id} />
       </GridColumn>
-      <GridColumn width={6}>
+      <GridColumn mobile={16} tablet={8} computer={16}>
         <EventDetailedSideBar event={event} />
       </GridColumn>
     </Grid>
