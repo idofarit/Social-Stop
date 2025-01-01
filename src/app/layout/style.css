@@ -63,7 +63,7 @@ body {
   }
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1276px) {
+@media only screen and (min-width: 992px) and (max-width: 1576px) {
   .ui.column.grid > [class*="sixteen wide computer"].column,
   .ui.grid > .column.row > [class*="sixteen wide computer"].column,
   .ui.grid > .row > [class*="sixteen wide computer"].column,
