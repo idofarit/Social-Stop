@@ -62,3 +62,12 @@ body {
     width: 100% !important;
   }
 }
+
+@media only screen and (min-width: 992px) {
+  .ui.column.grid > [class*="sixteen wide computer"].column,
+  .ui.grid > .column.row > [class*="sixteen wide computer"].column,
+  .ui.grid > .row > [class*="sixteen wide computer"].column,
+  .ui.grid > [class*="sixteen wide computer"].column {
+    width: auto !important;
+  }
+}
