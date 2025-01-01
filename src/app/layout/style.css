@@ -55,6 +55,9 @@ body {
   .grid_ten {
     order: 2 !important;
   }
+  .sixteen.wide {
+    width: auto !important;
+  }
   .stick_bar {
     position: relative !important;
     top: 0px !important;
