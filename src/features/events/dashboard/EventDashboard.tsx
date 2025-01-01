@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Grid, GridColumn, GridRow } from "semantic-ui-react";
+import { Grid, GridColumn } from "semantic-ui-react";
 import { QueryOptions } from "../../../app/hooks/firestore/types";
 import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
 import EmptyState from "../../../app/layout/EmptyState";
@@ -49,7 +49,7 @@ function EventDashboard() {
 
   return (
     <Grid>
-      <GridColumn mobile={16} tablet={8} width={10} className="grid_ten">
+      <GridColumn mobile={16} tablet={8} computer={16} className="grid_ten">
         {!loadedInitial ? (
           <>
             <EventListItemPlaceholder />
@@ -70,13 +70,13 @@ function EventDashboard() {
           </>
         )}
       </GridColumn>
-      <GridColumn mobile={16} tablet={8} width={6} className="grid_six">
-        <GridRow
+      <GridColumn mobile={16} tablet={8} computer={16} className="grid_six">
+        <div
           className="ui fixed top sticky stick_bar"
           style={{ top: 98, width: 405, zIndex: 1 }}
         >
           <EventFilters setQuery={setQuery} />
-        </GridRow>
+        </div>
       </GridColumn>
     </Grid>
   );
