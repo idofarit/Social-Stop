@@ -49,7 +49,7 @@ function EventDashboard() {
 
   return (
     <Grid stackable columns={2}>
-      <GridColumn width={10} mobile={16} className="grid_ten">
+      <GridColumn width={10} mobile={16} computer={2} className="grid_ten">
         {!loadedInitial ? (
           <>
             <EventListItemPlaceholder />
