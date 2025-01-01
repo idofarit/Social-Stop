@@ -49,7 +49,7 @@ function EventDashboard() {
 
   return (
     <Grid>
-      <GridColumn largeScreen={2} widescreen={1} className="grid_ten">
+      <GridColumn mobile={16} tablet={8} width={10} className="grid_ten">
         {!loadedInitial ? (
           <>
             <EventListItemPlaceholder />
@@ -70,7 +70,7 @@ function EventDashboard() {
           </>
         )}
       </GridColumn>
-      <GridColumn largeScreen={2} widescreen={1} className="grid_six">
+      <GridColumn mobile={16} tablet={8} width={6} className="grid_six">
         <div
           className="ui fixed top sticky stick_bar"
           style={{ top: 98, width: 405, zIndex: 1 }}
