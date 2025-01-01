@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
+import { Grid, GridColumn, GridRow } from "semantic-ui-react";
 import { QueryOptions } from "../../../app/hooks/firestore/types";
 import { useFireStore } from "../../../app/hooks/firestore/useFirestore";
 import EmptyState from "../../../app/layout/EmptyState";
@@ -49,35 +49,39 @@ function EventDashboard() {
 
   return (
     <Grid stackable>
-      <GridColumn mobile={16} tablet={8} computer={2} className="grid_ten">
-        {!loadedInitial ? (
-          <>
-            <EventListItemPlaceholder />
-            <EventListItemPlaceholder />
-          </>
-        ) : (
-          <>
-            {events.length === 0 ? (
-              <EmptyState />
-            ) : (
-              <EventList
-                events={events}
-                hasMore={hasMore.current}
-                loadMore={loadMore}
-                loading={status === "loading"}
-              />
-            )}
-          </>
-        )}
-      </GridColumn>
-      <GridColumn mobile={16} tablet={8} computer={2} className="grid_six">
-        <div
-          className="ui fixed top sticky stick_bar"
-          style={{ top: 98, width: 405, zIndex: 1 }}
-        >
-          <EventFilters setQuery={setQuery} />
-        </div>
-      </GridColumn>
+      <GridRow columns={2}>
+        <GridColumn mobile={16} tablet={8} className="grid_ten">
+          {!loadedInitial ? (
+            <>
+              <EventListItemPlaceholder />
+              <EventListItemPlaceholder />
+            </>
+          ) : (
+            <>
+              {events.length === 0 ? (
+                <EmptyState />
+              ) : (
+                <EventList
+                  events={events}
+                  hasMore={hasMore.current}
+                  loadMore={loadMore}
+                  loading={status === "loading"}
+                />
+              )}
+            </>
+          )}
+        </GridColumn>
+      </GridRow>
+      <GridRow columns={2}>
+        <GridColumn mobile={16} tablet={8} className="grid_six">
+          <div
+            className="ui fixed top sticky stick_bar"
+            style={{ top: 98, width: 405, zIndex: 1 }}
+          >
+            <EventFilters setQuery={setQuery} />
+          </div>
+        </GridColumn>
+      </GridRow>
     </Grid>
   );
 }
