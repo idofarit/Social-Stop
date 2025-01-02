@@ -21,7 +21,7 @@ function HomePage() {
           />
           Social-Stop
         </Header>
-        <Button size="huge" inverted as={Link} to="/events">
+        <Button size="medium" inverted as={Link} to="/events">
           Get Started
           <Icon name="arrow right" inverted />
         </Button>

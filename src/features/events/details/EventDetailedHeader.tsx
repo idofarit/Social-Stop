@@ -75,7 +75,7 @@ function EventDetailedHeader({ event }: Props) {
             <Item>
               <Item.Content>
                 <Header
-                  size="huge"
+                  size="medium"
                   content={event.title}
                   style={{ color: "white" }}
                 />
@@ -92,6 +92,7 @@ function EventDetailedHeader({ event }: Props) {
       <Segment attached="bottom" clearing>
         {event.isHost ? (
           <Button
+            size="medium"
             color="orange"
             floated="right"
             as={Link}
