@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { Button, Container, Menu, MenuItem } from "semantic-ui-react";
+import { Button, Menu, MenuItem } from "semantic-ui-react";
 import { useAppSelector } from "../../store/store.ts";
 
-import SignedInMenu from "./SignedInMenu";
-import SignedOutButton from "./SignedOutButton";
 import { useMediaQuery } from "react-responsive";
 import NavbarLg from "./NavbarLg.tsx";
 import NavbarMb from "./NavbarMb.tsx";
+import SignedInMenu from "./SignedInMenu";
+import SignedOutButton from "./SignedOutButton";
 
 export default function Navbar() {
   const { authenticated } = useAppSelector((state) => state.auth);
@@ -50,8 +50,8 @@ export default function Navbar() {
 
   return (
     <Menu inverted={true} fixed="top">
-      <Container>
-        {/* <MenuItem header as={NavLink} to={"/"}>
+      {/* <Container> */}
+      {/* <MenuItem header as={NavLink} to={"/"}>
           <img
             src="/logo.png"
             alt="logo"
@@ -74,12 +74,12 @@ export default function Navbar() {
 
         {authenticated ? <SignedInMenu /> : <SignedOutButton />} */}
 
-        {size.sm ? (
-          <NavbarLg renderLinks={renderLinks} />
-        ) : (
-          <NavbarMb renderLinks={renderLinks} />
-        )}
-      </Container>
+      {size.sm ? (
+        <NavbarLg renderLinks={renderLinks} />
+      ) : (
+        <NavbarMb renderLinks={renderLinks} />
+      )}
+      {/* </Container> */}
     </Menu>
   );
 }

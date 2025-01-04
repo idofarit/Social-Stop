@@ -5,9 +5,9 @@ function Overlay() {
   return (
     <div
       style={{
-        backgroundColor: "rgba(0, 0, 0, 0.795)",
+        backgroundColor: "rgba(0, 104, 190, 0.795)",
         position: "fixed",
-        height: "110vh",
+        height: "50vh",
         width: "100%",
       }}
     />
@@ -39,7 +39,7 @@ function NavbarMb({ renderLinks }: any) {
       {visible && <Overlay />}
       <Menu inverted size="tiny" borderless attached>
         <Menu.Item>
-          <img src="ghostblog.svg" width="35px" height="35px" alt="" />
+          <img src="/logo.png" width="35px" height="35px" alt="" />
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item onClick={toggleSidebar}>{icon}</Menu.Item>
