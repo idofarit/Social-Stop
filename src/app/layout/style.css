@@ -71,3 +71,11 @@ body {
     width: 50% !important;
   }
 }
+
+.ui.visible.left.overlay.sidebar {
+  display: grid !important;
+}
+
+.ui.visible.left.overlay.sidebar a {
+  margin: auto !important;
+}
