@@ -5,7 +5,7 @@ function Overlay() {
   return (
     <div
       style={{
-        backgroundColor: "rgba(0, 104, 190, 0.795)",
+        backgroundColor: "rgba(0, 0, 0, 0.795)",
         position: "fixed",
         height: "50vh",
         width: "100%",
