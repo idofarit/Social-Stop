@@ -94,3 +94,12 @@ body {
 .ui.dropdown {
   padding: 5px !important;
 }
+.ui.inverted.segment {
+  background: transparent !important;
+}
+.ui.inverted.menu {
+  background: transparent !important;
+}
+.ui.attached.segment {
+  border: none !important;
+}
