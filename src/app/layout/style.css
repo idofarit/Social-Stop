@@ -95,10 +95,20 @@ body {
   padding: 5px !important;
 }
 .ui.inverted.segment {
-  background: transparent !important;
+  background-image: linear-gradient(
+    135deg,
+    rgb(24, 42, 115) 0%,
+    rgb(33, 138, 174) 69%,
+    rgb(32, 167, 172) 89%
+  ) !important;
 }
 .ui.inverted.menu {
-  background: transparent !important;
+  background-image: linear-gradient(
+    135deg,
+    rgb(24, 42, 115) 0%,
+    rgb(33, 138, 174) 69%,
+    rgb(32, 167, 172) 89%
+  ) !important;
 }
 .ui.attached.segment {
   border: none !important;
