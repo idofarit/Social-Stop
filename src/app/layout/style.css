@@ -64,9 +64,6 @@ body {
   .right.item {
     margin: auto !important;
   }
-  .item.active {
-    width: 100% !important;
-  }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1576px) {
@@ -93,4 +90,7 @@ body {
 }
 .ui.visible.left.overlay.sidebar a img {
   margin: auto !important;
+}
+.ui.dropdown {
+  padding: 5px !important;
 }

@@ -7,7 +7,7 @@ function Overlay() {
       style={{
         backgroundColor: "rgba(0, 0, 0, 0.795)",
         position: "fixed",
-        height: "50vh",
+        height: "110vh",
         width: "100%",
       }}
     />
